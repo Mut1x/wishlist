@@ -1,6 +1,21 @@
 # Wishlist
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+Track your wishes and keep a list.
+
+## Tech stack
+
+- Angular 20
+- Typrscript
+- Less
+- Local storage
+
+## To Do
+
+- Modal window for form
+- Use routing to see individual wishes
+- Clean up the UI
+- Import/export wishes to JSON and CSV
+- Write tests
 
 ## Development server
 
