@@ -1,61 +1,58 @@
 <main class="container">
   <h1>{{ title }}</h1>
 
-  <app-error [error]="this.wishError"></app-error>
-
-  <form #form="ngForm" class="wish-list-form">
-    <input type="text" placeholder="Wish name" class="form-input" name="newWishName" [(ngModel)]="newWishName" />
-    <input type="text" placeholder="Wish description" class="form-input" name="newWishDescription"
-      [(ngModel)]="newWishDescription" />
-    <div class="inline-form-input-wrapper">
-      <input type="text" placeholder="Wish price" name="newWishPrice" [(ngModel)]="newWishPrice"
-        class="form-input inline-form-input-10 neighbour-short-select" />
-      <select name="newWishCurrency" class="form-input inline-form-input-2 center-text short-select" [(ngModel)]="newWishCurrency">
-        @for (currency of currencies; track currency) {
-        <option name="currency" value="{{ currency }}">{{ currency }}</option>
-        }
-      </select>
-    </div>
-
-    <input type="url" placeholder="Wish link" name="newWishLink" [(ngModel)]="newWishLink" />
-    <button type="submit" (click)="$event.preventDefault(); addWish(); resetForm(form); newWishCurrency='EUR'">Add wish</button>
-  </form>
+  <div class="header-actions">
+    <button class="btn btn-primary" (click)="openAddModal()">
+      <span>+</span> Add New Wish
+    </button>
+  </div>
 
   @if (wishes.length > 0) {
   <ul class="wish-list">
     @for (wish of wishes; track wish.id) {
-    <li class="wish">
-      <form #form="ngForm" class="wish-form">
-        <div class="wish-edit-controls">
-          <button (click)="editingWishes.includes(wish) ? saveWish(wish) : editWish(wish)"><img width="15" height="15"
-              [src]="editingWishes.includes(wish) ? './assets/save.svg' : './assets/edit.svg'"
-              [alt]="editingWishes.includes(wish) ? 'Save Icon' : 'Edit Icon'"></button>
-          <button (click)="stopEdit(wish)" [disabled]="!editingWishes.includes(wish)"><img width="15" height="15"
-              src="/assets/cancel.svg" alt="Cancel Icon"></button>
-          <button (click)="removeWish(wish)"><img width="15" height="15" src="/assets/delete.svg"
-              alt="Delete Icon"></button>
-        </div>
-
-        <div class="wish-input-controls">
-          @if (editingWishes.includes(wish)) {
-          <input type="text" placeholder="Wish name" name="wishName" [(ngModel)]="wish.name" />
-          <input type="text" placeholder="Wish description" name="wishDescription" [(ngModel)]="wish.description" />
-          <input type="text" placeholder="Wish price" name="newWishPrice" [(ngModel)]="wish.price" />
-          <input type="text" placeholder="Currency" name="wishCurrency" [(ngModel)]="wish.currency" />
-          <input type="url" placeholder="Wish link" name="wishLink" [(ngModel)]="wish.link" />
-          } @else {
-          <h2>{{ wish.name }}</h2>
-          <p>{{ wish.description }}</p>
-          <p>{{ wish.price }} {{ wish.currency }}</p>
-          <a href="{{ wish.link }}" target="_blank">Link</a>
+    <li class="wish" [class.acquired]="wish.isAcquired">
+      <div class="wish-content">
+        <div class="wish-info">
+          <h3>{{ wish.name }}</h3>
+          @if (wish.description) {
+            <p class="wish-description">{{ wish.description }}</p>
+          }
+          @if (wish.price) {
+            <p class="wish-price">{{ wish.price }} {{ wish.currency }}</p>
+          }
+          @if (wish.link) {
+            <a href="{{ wish.link }}" target="_blank" class="wish-link">View Item</a>
           }
         </div>
-        <input type="checkbox" [checked]="wish.isAcquired" (click)="toggleWish(wish)" />
-      </form>
+        
+        <div class="wish-actions">
+          <button class="btn btn-edit" (click)="openEditModal(wish)" title="Edit Wish">
+            <img width="16" height="16" src="/assets/edit.svg" alt="Edit" />
+          </button>
+          <button class="btn btn-delete" (click)="removeWish(wish)" title="Delete Wish">
+            <img width="16" height="16" src="/assets/delete.svg" alt="Delete" />
+          </button>
+          <label class="checkbox-wrapper">
+            <input type="checkbox" [checked]="wish.isAcquired" (change)="toggleWish(wish)" />
+            <span class="checkmark"></span>
+            <span class="label-text">Acquired</span>
+          </label>
+        </div>
+      </div>
     </li>
     }
   </ul>
   } @else {
-  <p>No items in wishlist.</p>
+  <div class="empty-state">
+    <p>No items in wishlist.</p>
+    <button class="btn btn-primary" (click)="openAddModal()">Add Your First Wish</button>
+  </div>
   }
+
+  <app-modal 
+    [isOpen]="isModalOpen"
+    [editingWish]="editingWish"
+    (closeModal)="closeModal()"
+    (saveWish)="handleSaveWish($event)"
+  ></app-modal>
 </main>
