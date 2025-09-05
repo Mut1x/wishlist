@@ -21,7 +21,7 @@
             "polyfills": [
               "zone.js"
             ],
-            "outputPath": "/web",
+            "outputPath": "wishlist",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
             "assets": [
