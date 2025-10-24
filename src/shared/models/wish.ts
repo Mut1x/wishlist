@@ -6,6 +6,6 @@ export class Wish {
     public price?: string,
     public currency?: string,
     public link?: string,
-    public isAcquired?: Boolean
+    public isAcquired?: Boolean,
   ) {}
 }

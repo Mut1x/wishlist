@@ -1,0 +1,13 @@
+@import '../../../shared/styles/vars.less';
+@import '../../../shared/styles/animations.less';
+
+.error-message {
+  background-color: lighten(@color-error, 40%);
+  border: 1px solid @color-error;
+  color: @color-error;
+  padding: .3em 1em;
+  border-radius: 6px;
+  font-size: .875rem;
+  margin-top: .75rem;
+  animation: slideIn 0.3s ease-out;
+}

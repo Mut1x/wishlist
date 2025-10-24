@@ -15,25 +15,37 @@
         <div class="wish-info">
           <h3>{{ wish.name }}</h3>
           @if (wish.description) {
-            <p class="wish-description">{{ wish.description }}</p>
-          }
-          @if (wish.price) {
-            <p class="wish-price">{{ wish.price }} {{ wish.currency }}</p>
-          }
-          @if (wish.link) {
-            <a href="{{ wish.link }}" target="_blank" class="wish-link">View Item</a>
+          <p class="wish-description">{{ wish.description }}</p>
+          } @if (wish.price) {
+          <p class="wish-price">{{ wish.price }} {{ wish.currency }}</p>
+          } @if (wish.link) {
+          <a href="{{ wish.link }}" target="_blank" class="wish-link"
+            >View Item</a
+          >
           }
         </div>
-        
+
         <div class="wish-actions">
-          <button class="btn btn-edit" (click)="openEditModal(wish)" title="Edit Wish">
+          <button
+            class="btn btn-edit"
+            (click)="openEditModal(wish)"
+            title="Edit Wish"
+          >
             <img width="16" height="16" src="/assets/edit.svg" alt="Edit" />
           </button>
-          <button class="btn btn-delete" (click)="removeWish(wish)" title="Delete Wish">
+          <button
+            class="btn btn-delete"
+            (click)="removeWish(wish)"
+            title="Delete Wish"
+          >
             <img width="16" height="16" src="/assets/delete.svg" alt="Delete" />
           </button>
           <label class="checkbox-wrapper">
-            <input type="checkbox" [checked]="wish.isAcquired" (change)="toggleWish(wish)" />
+            <input
+              type="checkbox"
+              [checked]="wish.isAcquired"
+              (change)="toggleWish(wish)"
+            />
             <span class="checkmark"></span>
             <span class="label-text">Acquired</span>
           </label>
@@ -42,14 +54,9 @@
     </li>
     }
   </ul>
-  } @else {
-  <div class="empty-state">
-    <p>No items in wishlist.</p>
-    <button class="btn btn-primary" (click)="openAddModal()">Add Your First Wish</button>
-  </div>
   }
 
-  <app-modal 
+  <app-modal
     [isOpen]="isModalOpen"
     [editingWish]="editingWish"
     (closeModal)="closeModal()"
